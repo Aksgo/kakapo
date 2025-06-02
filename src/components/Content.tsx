@@ -1,7 +1,8 @@
 import React from "react";
 import ContentCard from "./ContentCard";
-const Content = ()=>{
-    const cardData = [
+import { CardData } from "./CardData";
+const Content = ()=>{    
+    const sampleData : CardData[] = [
             {
                 id: 1,
                 title: "HTML Basics",
@@ -28,11 +29,18 @@ const Content = ()=>{
                 description: "Learn how to use utility classes with Tailwind CSS for fast styling.",
             }
         ];
-
+        localStorage.setItem("sampleData", JSON.stringify(sampleData));
+        let storeData = localStorage.getItem("sampleData");
+        let cardData :CardData[] = [];
+        if(storeData){
+            cardData = JSON.parse(storeData);
+            console.log(cardData);
+        }
     return (
         <>
-           {<div className="flex flex-wrap gap-3 p-4">
-                {cardData.map((data)=>(<ContentCard data = {data}/>))}
+           {<div className="flex gap-3 justify-center flex-wrap p-4">
+                {cardData.map((data)=>(<ContentCard data = {data}/>)
+                )}
             </div>
            }
         </>

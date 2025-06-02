@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header text-center p-6 bg-[#a3931e] font-mono text-gray-100 text-2xl">
+      <header className="App-header text-center p-6 bg-[#99731a] font-mono text-gray-100 text-2xl">
         Scripty
       </header>
       <div className="bg-[#343434] text-center p-3 text-xl text-gray-300 raleway-f1">Create. Manage. Safe.</div>
@@ -16,7 +16,21 @@ function App() {
         <div className="sidebar border-r-1 border-gray-500 w-1/4 flex flex-col pt-5 px-3 gap-2 text-gray-300">
           <Sidebar/>
         </div>
-        <div className="content w-full">
+        <div className="content relative">
+            <div
+            style={{
+            position: "fixed",
+            top: "70%",
+            left: "70%",
+            width: "800px",
+            height: "800px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(205, 169, 63, 0.1) 1%, rgba(224, 191, 70, 0.1) 1%, transparent 80%)",
+            filter: "blur(150px)",
+            pointerEvents: "none",
+            zIndex: 1
+          }}
+          />
           <Content/>
         </div>
       </div>
