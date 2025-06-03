@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import Folder from "./components/Folder"
 import Sidebar from './components/Sidebar';
-import folderData from "./data/files.json";
 import Content from './components/Content';
 import "./App.css";
-function App() {
+import ContentDisplay from './components/ContentDisplay';
+function App() {  
+    const [display, setDisplay] = useState<string>("new");
 
   return (
     <div className="App">
-      <header className="App-header text-center p-6 bg-[#99731a] font-mono text-gray-100 text-2xl">
+      <header className="App-header text-center p-6 bg-[#99731a]  font-mono text-gray-100 text-2xl">
         Scripty
       </header>
-      <div className="bg-[#343434] text-center p-3 text-xl text-gray-300 raleway-f1">Create. Manage. Safe.</div>
+      <div className=" text-center p-3 text-xl text-gray-300 raleway-f1 bg-[#292722]">
+        <span className="relative z-10">Create. Manage. Safe.</span>
+      </div>
       <div className="main flex h-screen text-white">
-        <div className="sidebar border-r-1 border-gray-500 w-1/4 flex flex-col pt-5 px-3 gap-2 text-gray-300">
+        <div className="sidebar border-r-1 border-gray-600 w-1/4 flex flex-col pt-5 px-3 gap-2 text-gray-300">
           <Sidebar/>
         </div>
         <div className="content relative">
@@ -25,13 +28,13 @@ function App() {
             width: "800px",
             height: "800px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(205, 169, 63, 0.1) 1%, rgba(224, 191, 70, 0.1) 1%, transparent 80%)",
+            background: "radial-gradient(circle, rgba(205, 169, 63, 0.1) 1%, rgba(224, 191, 70, 0.14) 1%, transparent 80%)",
             filter: "blur(150px)",
             pointerEvents: "none",
             zIndex: 1
           }}
-          />
-          <Content/>
+          ></div>
+          <ContentDisplay display = {display} setDisplay = {setDisplay}/>
         </div>
       </div>
     </div>
