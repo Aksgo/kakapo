@@ -1,8 +1,13 @@
 import React from "react";
 import ContentCard from "./ContentCard";
 import { CardData } from "./CardData";
-const Content = ()=>{    
-    const sampleData : CardData[] = [
+
+interface Props{
+    cardData: CardData[];
+};
+
+const Content = ({cardData}:Props)=>{    
+    /*const sampleData : CardData[] = [
             {
                 id: 1,
                 title: "HTML Basics",
@@ -35,7 +40,8 @@ const Content = ()=>{
         if(storeData){
             cardData = JSON.parse(storeData);
             console.log(cardData);
-        }
+        }*/
+       console.log(cardData);
     return (
         <>
            {<div className="flex gap-3 justify-center flex-wrap p-4">

@@ -2,7 +2,7 @@ import React, {useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiFileOn } from "react-icons/ci";
 import { MdOutlineNotes } from "react-icons/md";
-import Snippet from "./Snippet";
+import NewSnippet from "./NewSnippet";
 const Sidebar = ()=>{
     const [display, setDisplay] = useState<string>("home");
     const handleNew = ()=>{
