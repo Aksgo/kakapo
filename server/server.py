@@ -3,18 +3,19 @@ from models import db, User
 from config import ApplicationConfig
 from flask_bcrypt import Bcrypt
 from flask_session import Session
-
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
 
 bcrypt = Bcrypt(app)
+cors = CORS(app, supports_credentials=True)
 server_session = Session(app)
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
-
+@cross_origin
 @app.route("/@me")
 def getInfo():
     user_id = session.get("user_id", None)
@@ -26,7 +27,7 @@ def getInfo():
         "email":user.email
     })
 
-
+@cross_origin
 @app.route("/register", methods= ["POST"])
 def register():
     email =request.json["email"]
@@ -45,7 +46,7 @@ def register():
         "email":new_user.email
     })
 
-
+@cross_origin
 @app.route("/login", methods =[ "POST"])
 def login():
     email = request.json["email"]
@@ -64,4 +65,4 @@ def login():
     }),200
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug= True)
