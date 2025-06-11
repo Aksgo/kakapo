@@ -19,11 +19,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header text-center p-6 bg-[#99731a]  font-mono text-gray-100 text-2xl">
-        Scripty
+        Kakapo
       </header>
-      <div className=" text-center p-3 text-xl text-gray-300 raleway-f1 bg-[#292722]">
-        <span className="relative z-10">Create. Manage. Safe.</span>
-      </div>
+      {/* <div className=" text-center p-3 text-xl text-gray-300 raleway-f1 bg-[#292722]">
+        <span className="relative z-10">Create. Manage. Share.</span>
+      </div> */}
       <div className="main flex h-screen text-white">
         <div className="sidebar border-r-1 border-gray-600 w-1/4 flex flex-col pt-5 px-3 gap-2 text-gray-300">
           <Sidebar/>
