@@ -1,5 +1,5 @@
 
-# Scripty
+# Kakapo 🦜
 ## Setup 
 
 ### Frontend
