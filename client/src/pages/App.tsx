@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import Folder from "./components/Folder"
-import Sidebar from './components/Sidebar';
-import Content from './components/Content';
+import Folder from "../components/Folder"
+import Sidebar from '../components/Sidebar';
+import Content from '../components/Content';
 import "./App.css";
-import ContentDisplay from './components/ContentDisplay';
+import ContentDisplay from '../components/ContentDisplay';
 function App() {  
     const [display, setDisplay] = useState<string>("new");
-    useEffect(()=>{
-      fetch("/dashboard").then(
-        res => res.json()
-      ).then(
-        data => {
-          console.log(data);
-        }
-      )
-    },[]);
+    // useEffect(()=>{
+    //   fetch("/dashboard").then(
+    //     res => res.json()
+    //   ).then(
+    //     data => {
+    //       console.log(data);
+    //     }
+    //   )
+    // },[]);
 
   return (
     <div className="App">

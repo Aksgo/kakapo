@@ -1,3 +1,5 @@
 flow.txt
 **/.env
 server/instance
+**/.venv
+server/__pycache__/*
