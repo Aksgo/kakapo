@@ -26,7 +26,7 @@ npm run start
 ```
 cd ./server
 ```
-2) Server is running on a docker container - pre install docker
+2) Install Docker to run redis image
 
 3) Currently - Server is running on flask and Redis session is running on docker
 
