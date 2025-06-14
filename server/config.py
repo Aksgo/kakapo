@@ -6,11 +6,12 @@ load_dotenv()
 class ApplicationConfig:
 
     SECRET_KEY = os.environ["SECRET_KEY"]
-
+    POSTGRES_USER = os.environ["POSTGRES_USER"]
+    POSTGRES_PASSWORD = os.environ["POSTGRES_PASSWORD"]
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///./db.sqlite"
-
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/postgres"
+    
     SESSION_TYPE = "redis"
     SESSION_PERMANENT = False
     SESSION_USE_SIGNER = True

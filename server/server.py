@@ -40,7 +40,7 @@ def register():
     new_user = User(email = email, password = hashed_password)
     db.session.add(new_user)
     db.session.commit()
-
+    session['user_id'] = new_user.id
     return jsonify({
         "id" : new_user.id,
         "email":new_user.email
@@ -58,11 +58,19 @@ def login():
     
     if not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "unauthorized"}),401
+    if(session.get(user.id) is not None):
+        return jsonify({"error" : "already logged in"}), 409
     
     session["user_id"] = user.id
     return jsonify({
         "id":user.id, "email" : user.email
     }),200
+
+@cross_origin
+@app.route('/logout', methods = ['POST'])
+def logout():
+    session.pop('user_id', None)
+    return "", 200
 
 if __name__ == "__main__":
     app.run(debug= True)
