@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import Content from '../components/Content';
 import "./App.css";
 import ContentDisplay from '../components/ContentDisplay';
+import api from '../api';
 function App() {  
     const [display, setDisplay] = useState<string>("new");
     // useEffect(()=>{
@@ -15,10 +16,21 @@ function App() {
     //     }
     //   )
     // },[]);
-
+  useEffect(() => {
+          const fetchUser = async () => {
+              try {
+                  const response = await api.get("http://127.0.0.1:5000/@me");
+              } catch (e) {
+                  console.log("Unauthorized");
+                  window.location.href="/";
+              }
+          }
+          fetchUser();
+      }, []);
+  
   return (
     <div className="App">
-      <header className="App-header text-center p-6 bg-[#99731a]  font-mono text-gray-100 text-2xl">
+      <header className="App-header text-center rubik-f2 p-4 border-b-[0.2px] border-gray-600 font-mono text-yellow-500 text-4xl">
         Kakapo
       </header>
       {/* <div className=" text-center p-3 text-xl text-gray-300 raleway-f1 bg-[#292722]">
