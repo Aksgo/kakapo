@@ -1,10 +1,10 @@
-FROM python:3.13-alpine3.21
+FROM python:3.11-alpine3.18
 
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt --no-cache-dir
+COPY requirements.txt requirements.txt
 
-COPY . .
-EXPOSE 5000
+RUN pip install -r requirements.txt
 
-CMD ["python", "server.py"]
+COPY source/ .
+
+CMD ["python", "app.py"]
