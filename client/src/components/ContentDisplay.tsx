@@ -14,14 +14,14 @@ const ContentDisplay = ({display, setDisplay}:Props)=>{
     if(display==="home"){
         return (
             <>
-                <Content cardData = {snipData}/>
+                <Content/>
             </>
         );
     }
     else if(display === "new"){
         return (
         <>
-            <NewSnippet snipData={snipData} setSnipData={setSnipData}/>
+            <NewSnippet/>
         </>
         )
     }else{

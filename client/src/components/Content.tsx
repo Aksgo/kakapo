@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContentCard from "./ContentCard";
 import { CardData } from "./CardData";
+import api from "../api";
+import { SnipType } from "../store/SnipType";
 
-interface Props{
-    cardData: CardData[];
+const Content = ()=>{    
+    const [homeData, setHomeData] =  useState<SnipType[]|null>(null);
+    useEffect(()=>{
+    const fetchSnippet = async ()=>{
+        try{
+        const response = await api.get("http://127.0.0.1:5000/fetch-snippet");
+        setHomeData(response.data);
+        }catch(e){
+        }
+    };
+    fetchSnippet();
+    },[]);
+    if(homeData==null){
+        return (<><div className="text-white text-4xl w-full text-center my-20">Loading...</div></>)
+    }
+    return (
+        <>
+           {<div className="flex gap-3 justify-center flex-wrap p-4">
+                {homeData.map((data)=>(<ContentCard data = {data}/>)
+                )}
+            </div>
+           }
+        </>
+    );
 };
 
-const Content = ({cardData}:Props)=>{    
-    /*const sampleData : CardData[] = [
+export default Content;
+
+ /*const sampleData : CardData[] = [
             {
                 id: 1,
                 title: "HTML Basics",
@@ -41,16 +66,3 @@ const Content = ({cardData}:Props)=>{
             cardData = JSON.parse(storeData);
             console.log(cardData);
         }*/
-       console.log(cardData);
-    return (
-        <>
-           {<div className="flex gap-3 justify-center flex-wrap p-4">
-                {cardData.map((data)=>(<ContentCard data = {data}/>)
-                )}
-            </div>
-           }
-        </>
-    );
-};
-
-export default Content;

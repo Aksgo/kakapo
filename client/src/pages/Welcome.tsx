@@ -4,7 +4,7 @@ import api from "../api";
 import { Link } from "react-router-dom";
 const Welcome: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
-
+    sessionStorage.clear();
     useEffect(() => {
         const fetchUser = async () => {
             try {

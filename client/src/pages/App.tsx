@@ -6,16 +6,13 @@ import "./App.css";
 import ContentDisplay from '../components/ContentDisplay';
 import api from '../api';
 function App() {  
-    const [display, setDisplay] = useState<string>("new");
-    // useEffect(()=>{
-    //   fetch("/dashboard").then(
-    //     res => res.json()
-    //   ).then(
-    //     data => {
-    //       console.log(data);
-    //     }
-    //   )
-    // },[]);
+    const [display, setDisplay] = useState<string>(
+      ()=>{return sessionStorage.getItem("dashboard-display") || "home";}
+    );
+  useEffect(()=>{
+    sessionStorage.setItem("dashboard-display", display);
+
+  }, [display]);
   useEffect(() => {
           const fetchUser = async () => {
               try {
@@ -27,34 +24,32 @@ function App() {
           }
           fetchUser();
       }, []);
-  
   return (
     <div className="App">
-      <header className="App-header text-center rubik-f2 p-4 border-b-[0.2px] border-gray-600 font-mono text-yellow-500 text-4xl">
+      <header className="App-header backdrop-blur-md fixed w-full top-0 z-50 text-center rubik-f2 p-4 font-mono text-yellow-500 text-4xl">
         Kakapo
       </header>
       {/* <div className=" text-center p-3 text-xl text-gray-300 raleway-f1 bg-[#292722]">
         <span className="relative z-10">Create. Manage. Share.</span>
       </div> */}
-      <div className="main flex h-screen text-white">
-        <div className="sidebar border-r-1 border-gray-600 w-1/4 flex flex-col pt-5 px-3 gap-2 text-gray-300">
-          <Sidebar/>
+      <div className="main flex text-white">
+        <div className="sidebar pt-24 w-1/4 flex flex-col px-3 gap-2 text-gray-300">
+          <Sidebar display = {display} setDisplay = {setDisplay}/>
         </div>
-        <div className="content relative">
-            <div
+        <div className="pt-20 content w-full relative">
+          <div
             style={{
             position: "fixed",
-            top: "70%",
-            left: "70%",
-            width: "800px",
+            top: "-20%",
+            left: "60%",
+            width: "1200px",
             height: "800px",
             borderRadius: "50%",
             background: "radial-gradient(circle, rgba(205, 169, 63, 0.1) 1%, rgba(224, 191, 70, 0.14) 1%, transparent 80%)",
             filter: "blur(150px)",
             pointerEvents: "none",
-            zIndex: 1
-          }}
-          ></div>
+            zIndex: 1}}>
+          </div>
           <ContentDisplay display = {display} setDisplay = {setDisplay}/>
         </div>
       </div>

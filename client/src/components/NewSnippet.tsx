@@ -1,45 +1,53 @@
 import React, { useState } from "react";
 import { CardData } from "./CardData";
-
-interface Props{
-    snipData: CardData[];
-    setSnipData :()=>void;
-};
-
+import api from "../api";
 type formInput = {
     title:string;
     description : string;
 };
 
-const NewSnippet = ({snipData, setSnipData}:Props)=>{
+const NewSnippet = ()=>{
 
-    const snipID= Math.floor(Math.random()*10000);
-    const [formData, setFormData]  = useState<formInput | null>({title:"", description : ""});
-    console.log(snipID);
+    const [formData, setFormData]  = useState<formInput>({title:"", description : ""});
 
-    const handleInputChange = (e:React.FormEvent<HTMLFormElement>)=>{
-        // const [key, value] = e.target;
-        // if(value){
-        //     setFormData((st)=>({...st , [key]:value }));
-        // }
-    };
-    const handleNewSnippet = (e : React.FormEvent<HTMLFormElement>)=>{
+    
+    const handleNewSnippet = async (e : React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        console.log();
-
+        if(formData.title==="" ||  formData.description===""){
+            alert("Empty");
+            return;
+        }
+        try{
+            const reponse = await api.post("http://127.0.0.1:5000/create-snippet",{
+            title : formData.title,
+            description : formData.description
+        });
+    }catch(error){
+        alert("Server Error");
+    }
+    setFormData({title:"", description:""});
     };
     
     return (
         <>
-            <form className=""
+            <form className="w-2/3"
             onSubmit={(e)=>{handleNewSnippet(e)}}>
-                <div className="id-display text-yellow-600 font-semibold m-4">Snippet ID : {snipID}</div>
-                <div className="text-gray-300 flex gap-10 mx-4 mt-4">
+                <div className="id-display text-yellow-600 font-semibold m-4">Create Snip :</div>
+                <div className="text-gray-300 flex flex-col gap-10 mx-4 mt-4">
                     <input type="text" 
-                    className="title bg-[#212121] p-2 rounded-sm" placeholder="Enter title"/>
-                    <input type="text" className="description bg-[#212121] p-2 rounded-sm" placeholder="Enter description" />
+                    className="title bg-[#212121] p-2 rounded-lg outline-none focus:ring-2 focus:ring-yellow-500" 
+                    placeholder="Enter title (at most 100 characters)"
+                    value={formData.title}
+                    onChange={(e)=>setFormData({...formData, title: e.target.value})}/>
+                    <textarea
+                    className="description bg-[#212121] p-2 rounded-lg outline-none focus:ring-2 focus:ring-yellow-500" 
+                    placeholder="Enter description (at most 1500 characters)"
+                    value={formData.description}
+                    rows={5}
+                    onChange={(e)=>setFormData({...formData, description: e.target.value})}/>
                 </div>
-                <button className="btn-submit text-white bg-[#31250f] rounded-lg mt-3 mx-4 p-3"> Create </button>
+                <button type="submit"
+                 className="btn-submit text-white bg-[#31250f] rounded-lg mt-3 mx-4 p-3"> Create </button>
             </form>
         </>
     );
