@@ -22,27 +22,26 @@ npm run start
 
 ### Backend
 
-1) Access Server
+1) Access server directory
 ```
 cd ./server
 ```
-2) Install Docker to run redis image
+2) Install Docker and start the Docker Engine
 
-3) Currently - Server is running on flask and Redis session is running on docker
+The backend is served completely using docker. postgres database is used to store user data and redis is used for server side session management.
 
-4) Pull & Run Redis image - exposing port 6379
+3) Build the image for flask server
 ```
-docker run -d --name redis -p 6379:6379 redis:latest
-```
-
-5) Put your  <SECRET_KEY> in ```.env``` and add it to ```.gitignore```
-
-6) Install the dependencies
-```
-pip install -r requirements.txt
+docker build -t kakapo-server .
 ```
 
-7) Run the server 
+4) Put your  <SECRET_KEY>, <POSTGRES_USER>, <POSTGRES_PASSWORD> in ```.env``` and do not forget to add file to ```.gitignore```
+
+The secret key will be used by flask server and postgres_user and postgres_password are the password you want to have for your postgres database.
+
+5) Run the services
 ```
-python server.py
+docker compose up -d
 ```
+
+6) View your tables at ```http://localhost:8080/```
