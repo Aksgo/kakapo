@@ -4,6 +4,9 @@ services:
     restart: always
     ports:
       - 5000:5000
+    #to remove when in prod
+    volumes:
+      - ./source:/app
     environment:
       SECRET_KEY: ${SECRET_KEY}
       POSTGRES_USER : ${POSTGRES_USER}
@@ -21,6 +24,8 @@ services:
       POSTGRES_DB: postgres
     ports:
       - 5431:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
   adminer:
     image: adminer
@@ -32,4 +37,6 @@ services:
     image: redis
     ports:
       - 6379:6379
-  
+
+volumes:
+  db_data:
