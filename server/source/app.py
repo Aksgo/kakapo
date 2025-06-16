@@ -1,5 +1,5 @@
 from flask import Flask, request, abort,jsonify, session
-from models import db, User
+from models import db, User, Snippet
 from config import ApplicationConfig
 from flask_bcrypt import Bcrypt
 from flask_session import Session
@@ -22,6 +22,8 @@ def getInfo():
     if not user_id:
         return jsonify({"error" : "unauthorized"}), 401
     user = User.query.filter_by(id = user_id).first()
+    if user is None:
+        return "",500
     return jsonify({
         "id" : user.id,
         "email":user.email
@@ -30,8 +32,12 @@ def getInfo():
 @cross_origin
 @app.route("/register", methods= ["POST"])
 def register():
-    email =request.json["email"]
-    password = request.json["password"]
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON"}), 400
+
+    email = data.get("email")
+    password = data.get("password")
 
     user_exists = User.query.filter_by(email = email).first() is not None
     if user_exists:
@@ -49,8 +55,12 @@ def register():
 @cross_origin
 @app.route("/login", methods =[ "POST"])
 def login():
-    email = request.json["email"]
-    password = request.json["password"]
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON"}), 400
+
+    email = data.get("email")
+    password = data.get("password")
 
     user = User.query.filter_by(email = email).first() 
     if user is None:
@@ -71,6 +81,39 @@ def login():
 def logout():
     session.pop('user_id', None)
     return "", 200
+
+@cross_origin
+@app.route('/create-snippet', methods=['POST'])
+def createSnippet():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON"}), 400
+    title = data.get('title')
+    description = data.get('description')
+    user_id = session.get('user_id', None)
+    if not user_id:
+        return jsonify({"error" : "unauthorized"}), 401
+    user = User.query.filter_by(id = user_id).first()
+    if user is None:
+        return "",500
+    new_snip = Snippet(title=title, description=description, user_id = user_id)
+    db.session.add(new_snip)
+    db.session.commit()
+    return "",200
+
+@cross_origin
+@app.route('/fetch-snippet', methods = ['GET'])
+def fetchSnippet():
+    user_id = session.get('user_id', None)
+    if not user_id:
+        return jsonify({"error" : "unauthorized"}), 401
+    user = User.query.filter_by(id = user_id).first()
+    if user is None:
+        return "",500
+    snippets = []
+    snippets = [snippet.serialize_snippet() for snippet in getattr(user, "snippets", [])]
+    return jsonify(snippets)
+
 
 if __name__ == "__main__":
     app.run(debug= True, host =  "0.0.0.0")
