@@ -28,9 +28,9 @@ cd ./server
 ```
 2) Install Docker and start the Docker Engine
 
-The backend is served completely using docker. postgres database is used to store user data and redis is used for server side session management.
+The backend is served completely using docker - flask, postgres, redis. Postgres database is used to store user data and redis is used for server side session management.
 
-3) Build the image for flask server
+3) Build the image for flask server (once)
 ```
 docker build -t kakapo-server .
 ```
@@ -44,4 +44,4 @@ The secret key will be used by flask server and postgres_user and postgres_passw
 docker compose up -d
 ```
 
-6) View your tables at ```http://localhost:8080/```
+6) Visualizeyour database at ```http://localhost:8080/```
